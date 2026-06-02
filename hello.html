@@ -1,9 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><title>Hello</title></head>
+<head>
+  <title>Hello</title>
+  <style>
+    body {
+      background-color: navy;
+      color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0 1.5rem;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav a {
+      color: #cfe2ff;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding-bottom: 2rem;
+    }
+
+    section, footer, figure {
+      margin-top: 1.5rem;
+    }
+
+    figure img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border: 2px solid #cfe2ff;
+      border-radius: 8px;
+    }
+
+    footer {
+      border-top: 1px solid #6c757d;
+      padding-top: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
 <body>
-  <h1>Hello, my name is [Your Name]</h1>
-  <p>This is my first hand-written HTML page.</p>
-  <img src="images/test.jpg" alt="A test image">
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#interests">Interests</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <header id="home">
+      <h1>Hello, my name is Arav Agarwal</h1>
+    </header>
+
+    <section id="about">
+      <p>This is my first hand-written HTML page.</p>
+      <p>Welcome to my small website where I practice using HTML structure and tags.</p>
+    </section>
+
+    <section id="interests">
+      <h2>My Interests</h2>
+      <article>
+        <p>Here are a few things I enjoy:</p>
+        <ul>
+          <li>Learning new web technologies</li>
+          <li>Exploring creative design ideas</li>
+          <li>Building simple projects with HTML and CSS</li>
+        </ul>
+      </article>
+      <details>
+        <summary>More about what I like</summary>
+        <p>I enjoy experimenting with page layout, trying new tags, and making content easier to read.</p>
+      </details>
+    </section>
+
+    <figure>
+      <img src="images/test.jpg" alt="A test image">
+      <figcaption>A photo used for practice.</figcaption>
+    </figure>
+  </main>
+
+  <footer id="contact">
+    <p>Thanks for visiting my page.</p>
+    <address>
+      Email me at <a href="mailto:your.email@example.com">your.email@example.com</a>
+    </address>
+    <p><time datetime="2026-06-02">June 2, 2026</time></p>
+  </footer>
 </body>
 </html>
