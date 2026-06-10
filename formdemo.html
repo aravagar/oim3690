@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arav Agarwal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0b;
+      --surface: #141412;
+      --border: rgba(255,255,255,0.07);
+      --text: #e8e4dc;
+      --muted: #888780;
+      --accent: #c9a96e;
+      --accent-dim: rgba(201,169,110,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,11,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HAMBURGER TOGGLE */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: var(--text);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-toggle.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.3rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .hero-cta:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTION */
+    section {
+      padding: 7rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+      font-size: 0.97rem;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .stat {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* VENTURES */
+    .ventures-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .venture-card {
+      background: var(--surface);
+      padding: 2.5rem 2rem;
+      transition: background 0.25s;
+    }
+
+    .venture-card:hover { background: rgba(201,169,110,0.05); }
+
+    .venture-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .venture-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .venture-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .venture-products {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .product-chip {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    /* INTERESTS */
+    .interests-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .interest-item {
+      background: var(--surface);
+      padding: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+
+    .interest-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      opacity: 0.5;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .interest-name {
+      font-size: 0.9rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .interest-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* CONTACT */
+    .contact-inner {
+      max-width: 600px;
+    }
+
+    .contact-inner p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      border-bottom: 1px solid rgba(201,169,110,0.2);
+      padding-bottom: 0.3rem;
+      transition: border-color 0.2s;
+    }
+
+    .contact-link:hover { border-color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* FADE IN */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+
+      /* show hamburger, hide regular links */
+      .nav-toggle { display: flex; }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(13,13,11,0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .nav-links.open { max-height: 300px; }
+
+      .nav-links li {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .ventures-grid { grid-template-columns: 1fr; }
+      .interests-list { grid-template-columns: 1fr; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Arav Agarwal</a>
+    <ul class="nav-links">
+      <li><a href="about-me.html">About Me</a></li>
+      <li><a href="#ventures">Ventures</a></li>
+      <li><a href="#interests">Interests</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Delhi · Boston · Babson College</span>
+      <h1>Building brands<br>at the <em>intersection</em><br>of material &amp; market.</h1>
+      <p class="hero-sub">
+        20-year-old entrepreneur running three interdependent building materials and interiors brands — while studying business at Babson College.
+      </p>
+      <a href="#ventures" class="hero-cta">Explore my work →</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="section-label">About</p>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <div class="section-title">Strategy, brand,<br>and execution.</div>
+        <p>I manage three family businesses in India's building materials and interiors sector — spanning raw material trading, modular furniture manufacturing, and premium retail branding — alongside a full course load at Babson College.</p>
+        <p>My work sits at the crossroads of <strong>brand strategy, export development, and B2B outreach</strong>. I think in frameworks, move fast once a decision is made, and hold everything to a premium standard.</p>
+        <p>Currently focused on <strong>US export development</strong> through trade shows like High Point Market and ICFF, and building out Decoven as a design-forward retail brand for architects and interior designers.</p>
+      </div>
+      <div class="about-stats fade-in">
+        <div class="stat">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Brands managed simultaneously</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Years of family business legacy</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">US</div>
+          <div class="stat-label">Primary export market in development</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ventures">
+    <p class="section-label">Ventures</p>
+    <div class="section-title fade-in">Three brands,<br>one ecosystem.</div>
+    <div class="ventures-grid fade-in">
+      <div class="venture-card">
+        <p class="venture-tag">Raw Materials · B2B</p>
+        <h3 class="venture-name">Realply<br>Industries</h3>
+        <p class="venture-desc">25+ year trading business supplying the interiors industry. The foundation and cash engine of the group.</p>
+        <div class="venture-products">
+          <span class="product-chip">Plywood</span>
+          <span class="product-chip">Veneer</span>
+          <span class="product-chip">Laminates</span>
+          <span class="product-chip">Edge Banding</span>
+        </div>
+      </div>
+      <div class="venture-card">
+        <p class="venture-tag">Manufacturing · B2B</p>
+        <h3 class="venture-name">Studio<br>forma</h3>
+        <p class="venture-desc">Modular furniture manufacturing arm targeting project-based B2B clients and channel partners.</p>
+        <div class="venture-products">
+          <span class="product-chip">Doors</span>
+          <span class="product-chip">Wardrobes</span>
+          <span class="product-chip">Wall Panels</span>
+          <span class="product-chip">KD Furniture</span>
+        </div>
+      </div>
+      <div class="venture-card">
+        <p class="venture-tag">Retail Brand · Premium</p>
+        <h3 class="venture-name">Deco<br>ven</h3>
+        <p class="venture-desc">Brand-led growth engine targeting architects and interior designers with premium surface products.</p>
+        <div class="venture-products">
+          <span class="product-chip">Wood Veneer</span>
+          <span class="product-chip">Fluted Panels</span>
+          <span class="product-chip">Louvers</span>
+          <span class="product-chip">Wall Panels RTU</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="interests">
+    <p class="section-label">Interests</p>
+    <div class="section-title fade-in">Beyond business.</div>
+    <div class="interests-list fade-in">
+      <div class="interest-item">
+        <span class="interest-num">01</span>
+        <div>
+          <p class="interest-name">Regenerative Agriculture</p>
+          <p class="interest-desc">Socio-ecological food systems, soil health, and the intersection of traditional knowledge and modern science.</p>
+        </div>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">02</span>
+        <div>
+          <p class="interest-name">Middle Eastern Literature</p>
+          <p class="interest-desc">Exploring futurism, postcolonial identity, and the concept of madness through Arabic, Persian, and Levantine writing.</p>
+        </div>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">03</span>
+        <div>
+          <p class="interest-name">Fitness</p>
+          <p class="interest-desc">Training 4-5 days a week with a focus on structured programming, nutrition, and long-term physical discipline.</p>
+        </div>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">04</span>
+        <div>
+          <p class="interest-name">Brand & Presentation</p>
+          <p class="interest-desc">Building decks, narratives, and visual identities that communicate luxury and credibility to high-intent audiences.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="section-label">Contact</p>
+    <div class="contact-inner fade-in">
+      <div class="section-title">Let's connect.</div>
+      <p>Whether it's export partnerships, B2B collaborations, or just a conversation — reach out directly.</p>
+      <a href="mailto:aagarwal19@babson.edu" class="contact-link">aagarwal19@babson.edu →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Arav Agarwal</p>
+    <p>Delhi · Boston</p>
+  </footer>
+
+  <script>
+    // fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // hamburger menu toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.classList.toggle('active');
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // close menu after tapping a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>
