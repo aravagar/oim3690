@@ -10,7 +10,7 @@ This is my course repo for OIM3690. It holds class exercises, weekly logs, and l
 | Project                        | Repo                                                   | Live URL                           | Status |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------- | ------ |
 | Personal Website               | [repo](https://github.com/aravagar/aravagar.github.io) | [live](https://aravagar.github.io) | ✅     |
-| MP1 — Website for Someone Else |                                                        |                                    | 🔲     |
+| MP1 — Website for Someone Else | [repo](https://github.com/aravagar/studioforma) | [live](https://aravagar.github.io/studioforma) | ✅|
 | MP2 — Interactive Web Tool     |                                                        |                                    | 🔲     |
 | MP3 — API-Powered App          |                                                        |                                    | 🔲     |
 | Final Project                  |                                                        |                                    | 🔲     |
