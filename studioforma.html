@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studioforma - Arav Agarwal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Arav Agarwal</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-me.html">About</a></li>
+      <li><a href="studioforma.html">Studioforma</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <span class="hero-tag">Manufacturing · B2B</span>
+    <h1 class="section-title">Studioforma</h1>
+    <p class="hero-sub">
+      The modular furniture manufacturing arm of my family's business group —
+      premium wood-veneered doors, wall panels, and kitchen shutters, made in India.
+    </p>
+  </header>
+
+  <section>
+    <p class="section-label">Overview</p>
+    <div class="sf-grid">
+      <div class="sf-text fade-in">
+        <p>Studioforma draws on more than <strong>30 years of experience</strong> in the furniture industry to create chic, elegant designs. Headquartered in New Delhi, it serves clients throughout India and is built on the manufacturing backbone of Realply Industries.</p>
+        <p>The brand targets <strong>architects, interior designers, builders, and homeowners</strong>, offering five distinct series of doors alongside wall panels and kitchen shutters.</p>
+      </div>
+      <ul class="sf-list fade-in">
+        <li>Doors <span>Project, UV, Exclusive Design, PU Paint &amp; Laminate series</span></li>
+        <li>Wall Panels <span>Texture and character for modern interiors</span></li>
+        <li>Kitchen Shutters <span>A wide range of designs and finishes</span></li>
+        <li>Made in India <span>In-house manufacturing, E1-grade construction</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Learn More</p>
+    <div class="contact-inner fade-in">
+      <p>Read more about my ventures on my <a href="about-me.html">About page</a>, or view the full Studioforma site I built.</p>
+      <a href="https://aravagar.github.io/studioforma" target="_blank" class="contact-link">aravagar.github.io/studioforma →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Arav Agarwal</p>
+    <p>Delhi · Boston</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

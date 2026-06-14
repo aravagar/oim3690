@@ -1,138 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        max-width: 480px;
-        margin: 60px auto;
-        padding: 0 1.5rem;
-        color: #1a1a1a;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Arav Agarwal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
 
-      h1 {
-        font-size: 1.4rem;
-        margin-bottom: 0.4rem;
-      }
+  <nav>
+    <a href="index.html" class="nav-logo">Arav Agarwal</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-me.html">About</a></li>
+      <li><a href="studioforma.html">Studioforma</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-      p.note {
-        font-size: 0.85rem;
-        color: #666;
-        margin-bottom: 1.8rem;
-      }
+  <header class="page-hero">
+    <span class="hero-tag">Get in touch</span>
+    <h1 class="section-title">Contact</h1>
+    <p class="hero-sub">
+      Whether it's export partnerships, B2B collaborations, or just a
+      conversation — reach out. All fields are required.
+    </p>
+  </header>
 
-      label {
-        display: block;
-        font-size: 0.88rem;
-        font-weight: 600;
-        margin-bottom: 0.3rem;
-      }
+  <section>
+    <form id="contact-form" action="https://oim.zhili.dev/echo/view" method="POST">
 
-      input,
-      textarea {
-        display: block;
-        width: 100%;
-        padding: 0.55rem 0.7rem;
-        margin-bottom: 1.3rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-        font-family: sans-serif;
-        background: #fafafa;
-        transition: border-color 0.2s, box-shadow 0.2s;
-      }
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required aria-required="true" />
+      </div>
 
-      input:focus,
-      textarea:focus {
-        outline: none;
-        border-color: #333;
-        box-shadow: 0 0 0 3px rgba(0,0,0,0.08);
-        background: #fff;
-      }
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required aria-required="true" />
+      </div>
 
-      /* highlight required fields that are empty on submit attempt */
-      input:invalid:not(:placeholder-shown),
-      textarea:invalid:not(:placeholder-shown) {
-        border-color: #c0392b;
-      }
+      <div>
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" required aria-required="true" />
+      </div>
 
-      textarea {
-        resize: vertical;
-        min-height: 110px;
-      }
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="What would you like to say?" required aria-required="true"></textarea>
+      </div>
 
-      button {
-        padding: 0.65rem 1.6rem;
-        background: #1a1a1a;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      button:hover { background: #444; }
-
-      button:focus-visible {
-        outline: 2px solid #333;
-        outline-offset: 3px;
-      }
-    </style>
-  </head>
-  <body>
-
-    <h1>Contact</h1>
-    <p class="note">All fields are required.</p>
-
-    <form action="https://oim.zhili.dev/echo/view" method="POST">
-
-      <label for="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        placeholder="Your full name"
-        required
-        aria-required="true"
-      />
-
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="you@example.com"
-        required
-        aria-required="true"
-      />
-
-      <!-- new input type: tel -->
-      <label for="phone">Phone</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        placeholder="+1 (555) 000-0000"
-        required
-        aria-required="true"
-      />
-
-      <label for="message">Message</label>
-      <textarea
-        id="message"
-        name="message"
-        placeholder="What would you like to say?"
-        required
-        aria-required="true"
-      ></textarea>
-
-      <button type="submit">Submit</button>
+      <button type="submit" class="form-submit">Submit</button>
 
     </form>
+  </section>
 
-  </body>
+  <footer>
+    <p>© 2026 Arav Agarwal</p>
+    <p>Delhi · Boston</p>
+  </footer>
+
+</body>
 </html>

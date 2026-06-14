@@ -4,198 +4,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Me - Arav Agarwal</title>
-  <style>
-    body {
-      font-family: Georgia, serif;
-      background-color: #0f0f0f;
-      color: #e0ddd8;
-      margin: 0;
-      padding: 0;
-      line-height: 1.8;
-    }
-
-    header {
-      background-color: #1a1a1a;
-      padding: 2rem 3rem;
-      border-bottom: 1px solid #333;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      font-weight: normal;
-      margin: 0 0 0.5rem 0;
-      color: #c9a96e;
-    }
-
-    header p {
-      margin: 0;
-      color: #888;
-      font-size: 0.95rem;
-    }
-
-    nav {
-      margin-top: 1rem;
-    }
-
-    nav a {
-      color: #c9a96e;
-      text-decoration: none;
-      margin-right: 1.5rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    main {
-      max-width: 800px;
-      margin: 3rem auto;
-      padding: 0 2rem;
-    }
-
-    h2 {
-      font-size: 1.4rem;
-      font-weight: normal;
-      color: #c9a96e;
-      border-bottom: 1px solid #333;
-      padding-bottom: 0.5rem;
-      margin-top: 3rem;
-    }
-
-    h3 {
-      font-size: 1.1rem;
-      font-weight: normal;
-      color: #e0ddd8;
-      margin-top: 1.5rem;
-    }
-
-    p {
-      color: #b0ada8;
-      font-size: 0.97rem;
-    }
-
-    ul {
-      color: #b0ada8;
-      padding-left: 1.5rem;
-      font-size: 0.97rem;
-    }
-
-    ul li {
-      margin-bottom: 0.4rem;
-    }
-
-    .image-local {
-      width: 100%;
-      max-width: 400px;
-      border: 1px solid #333;
-      border-radius: 4px;
-      display: block;
-      margin: 1.5rem 0;
-    }
-
-    .image-external {
-      width: 100%;
-      max-width: 400px;
-      border: 1px solid #333;
-      border-radius: 4px;
-      display: block;
-      margin: 1.5rem 0;
-    }
-
-    a {
-      color: #c9a96e;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      margin-top: 5rem;
-      padding: 2rem 3rem;
-      border-top: 1px solid #333;
-      background-color: #1a1a1a;
-      font-size: 0.8rem;
-      color: #555;
-      text-align: center;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <header>
-    <h1>Arav Agarwal</h1>
-    <p>Student at Babson College · Entrepreneur · Delhi, India</p>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about-me.html">About</a>
-      <a href="https://aravagar.github.io" target="_blank">My Website</a>
-    </nav>
+  <nav>
+    <a href="index.html" class="nav-logo">Arav Agarwal</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-me.html">About</a></li>
+      <li><a href="studioforma.html">Studioforma</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <span class="hero-tag">Delhi · Boston · Babson College</span>
+    <h1 class="section-title">About Me</h1>
+    <p class="hero-sub">
+      Student at Babson College and entrepreneur running three building
+      materials and interiors brands.
+    </p>
   </header>
 
-  <main>
+  <section>
+    <p class="section-label">Who I Am</p>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <img
+          src="images/aravagar.jpg"
+          alt="Arav Agarwal, student at Babson College and entrepreneur based in Delhi"
+          class="about-portrait"
+        />
+        <p>I am a 20-year-old student at Babson College pursuing a business degree, based between <strong>Delhi, India and Boston, USA</strong>. Alongside college, I run three interdependent family businesses in India's building materials and interiors sector.</p>
+        <p>My work focuses on <strong>export development, B2B outreach, and brand strategy</strong>. I think in frameworks, move fast once a direction is set, and hold everything to a premium standard.</p>
+        <p>This semester I am taking OIM3690 — AI-Powered Web Development, building real web products using AI as a coding partner across HTML, CSS, JavaScript, and APIs.</p>
+      </div>
+      <div class="about-stats fade-in">
+        <div class="stat">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Brands managed simultaneously</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Years of family business legacy</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">US</div>
+          <div class="stat-label">Primary export market in development</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <h2>Who I Am</h2>
+  <section>
+    <p class="section-label">My Ventures</p>
+    <div class="ventures-grid fade-in">
+      <div class="venture-card">
+        <p class="venture-tag">Raw Materials · B2B</p>
+        <h3 class="venture-name">Realply<br>Industries</h3>
+        <p class="venture-desc">A 25+ year raw materials trading business supplying the interiors industry.</p>
+        <div class="venture-products">
+          <span class="product-chip">Plywood</span>
+          <span class="product-chip">Veneer</span>
+          <span class="product-chip">Laminates</span>
+          <span class="product-chip">Edge Banding</span>
+        </div>
+      </div>
+      <div class="venture-card">
+        <p class="venture-tag">Manufacturing · B2B</p>
+        <h3 class="venture-name">Studio<br>forma</h3>
+        <p class="venture-desc">Modular furniture manufacturing producing doors, wardrobes, wall panels, and KD furniture.</p>
+        <div class="venture-products">
+          <span class="product-chip">Doors</span>
+          <span class="product-chip">Wardrobes</span>
+          <span class="product-chip">Wall Panels</span>
+          <span class="product-chip">KD Furniture</span>
+        </div>
+      </div>
+      <div class="venture-card">
+        <p class="venture-tag">Retail Brand · Premium</p>
+        <h3 class="venture-name">Deco<br>ven</h3>
+        <p class="venture-desc">A premium retail brand targeting architects and interior designers.</p>
+        <div class="venture-products">
+          <span class="product-chip">Wood Veneer</span>
+          <span class="product-chip">Fluted Panels</span>
+          <span class="product-chip">Louvers</span>
+          <span class="product-chip">Wall Panels RTU</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <img
-      src="images/aravagar.jpg"
-      alt="Arav Agarwal, student at Babson College and entrepreneur based in Delhi"
-      class="image-local"
-    />
+  <section>
+    <p class="section-label">Interests</p>
+    <div class="interests-list fade-in">
+      <div class="interest-item">
+        <span class="interest-num">01</span>
+        <div>
+          <p class="interest-name">Regenerative Agriculture</p>
+          <p class="interest-desc">Socio-ecological food systems, soil health, and traditional knowledge meeting modern science.</p>
+        </div>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">02</span>
+        <div>
+          <p class="interest-name">Middle Eastern Literature</p>
+          <p class="interest-desc">Futurism, postcolonial identity, and the concept of madness in Arabic, Persian, and Levantine writing.</p>
+        </div>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">03</span>
+        <div>
+          <p class="interest-name">Fitness</p>
+          <p class="interest-desc">Training 4-5 days a week with a focus on structured programming and long-term discipline.</p>
+        </div>
+      </div>
+      <div class="interest-item">
+        <span class="interest-num">04</span>
+        <div>
+          <p class="interest-name">Brand &amp; Presentation</p>
+          <p class="interest-desc">Decks, narratives, and visual identities that communicate luxury and credibility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <p>
-      I am a 20-year-old student at Babson College pursuing a business degree, based between Delhi, India and Boston, USA. Alongside college, I run three interdependent family businesses in India's building materials and interiors sector — spanning raw material trading, modular furniture manufacturing, and premium retail branding.
-    </p>
-
-    <p>
-      My work focuses on export development, B2B outreach, and brand strategy. I think in frameworks, move fast once a direction is set, and hold everything to a premium standard.
-    </p>
-
-    <h2>My Ventures</h2>
-
-    <h3>Realply Industries</h3>
-    <p>A 25+ year raw materials trading business supplying the interiors industry with plywood, veneer, laminates, and edge banding.</p>
-
-    <h3>Studioforma</h3>
-    <p>A modular furniture manufacturing arm producing doors, wardrobes, wall panels, and knock-down furniture for project-based B2B clients.</p>
-
-    <h3>Decoven</h3>
-    <p>A premium retail brand targeting architects and interior designers with wood veneer, fluted panels, louvers, and wall panels ready to use.</p>
-
-    <h2>Interests</h2>
-
-    <ul>
-      <li>Regenerative agriculture and socio-ecological food systems</li>
-      <li>Middle Eastern literature and futurism</li>
-      <li>Fitness and structured training</li>
-      <li>Brand strategy and presentation design</li>
-      <li>Export development and international trade</li>
-    </ul>
-
-    <h2>Currently Learning</h2>
-
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ35OTBWXXBag2SJofNrS8IlIl8j45x-GaGaQ&s"
-      alt="Babson College seal, the institution where Arav is studying business"
-      class="image-external"
-    />
-
-    <p>
-      This semester I am taking OIM3690 — AI-Powered Web Development at Babson College. The course focuses on building real web products using AI as a coding partner, covering HTML, CSS, JavaScript, and API integration.
-    </p>
-
-    <p>
-      Visit my personal website: <a href="https://aravagar.github.io" target="_blank">aravagar.github.io</a>
-    </p>
-
-  </main>
+  <section>
+    <p class="section-label">Currently Learning</p>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>This semester I am taking <strong>OIM3690 — AI-Powered Web Development</strong> at Babson College. The course focuses on building real web products using AI as a coding partner, covering HTML, CSS, JavaScript, and API integration.</p>
+        <p>Visit my personal website: <a href="https://aravagar.github.io" target="_blank">aravagar.github.io</a></p>
+      </div>
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ35OTBWXXBag2SJofNrS8IlIl8j45x-GaGaQ&s"
+        alt="Babson College seal, the institution where Arav is studying business"
+        class="about-external fade-in"
+      />
+    </div>
+  </section>
 
   <footer>
-    <p>Arav Agarwal · Babson College · Summer 2026</p>
+    <p>© 2026 Arav Agarwal</p>
+    <p>Delhi · Boston</p>
   </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
