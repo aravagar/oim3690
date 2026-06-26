@@ -1,1 +1,360 @@
-create
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a18;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #6b6b65;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e0e0db;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #6b6b65;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0db;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1a1a18;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #c8c8c2;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      background: #fff;
+      color: #1a1a18;
+      transition: border-color 0.15s;
+    }
+
+    input:focus {
+      outline: 2px solid #1a1a18;
+      outline-offset: 1px;
+      border-color: #1a1a18;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    input[type="number"] { -moz-appearance: textfield; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: #1a1a18;
+      flex-shrink: 0;
+    }
+
+    .checkbox-row label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .member-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* Order summary */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      padding: 6px 0;
+      color: #6b6b65;
+    }
+
+    .summary-row.discount { color: #2e7d32; font-weight: 600; }
+    .summary-row.total {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a18;
+      border-top: 1px solid #e0e0db;
+      margin-top: 8px;
+      padding-top: 12px;
+    }
+
+    .summary-divider {
+      border: none;
+      border-top: 1px solid #e0e0db;
+      margin: 4px 0;
+    }
+
+    .empty-summary {
+      font-size: 0.85rem;
+      color: #9e9e98;
+      text-align: center;
+      padding: 16px 0;
+    }
+
+    /* Error */
+    .error {
+      font-size: 0.8rem;
+      color: #c62828;
+      min-height: 18px;
+      margin-top: 4px;
+    }
+
+    /* Place order button */
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background: #1a1a18;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 4px;
+    }
+    .checkout-btn:hover { background: #333330; }
+    .checkout-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Confirmation */
+    .confirmation {
+      background: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      display: none;
+    }
+    .confirmation h2 { font-size: 1.1rem; color: #2e7d32; margin-bottom: 6px; }
+    .confirmation p { font-size: 0.85rem; color: #4a4a45; }
+
+    .reset-btn {
+      margin-top: 12px;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: #6b6b65;
+      border: 1px solid #c8c8c2;
+    }
+    .reset-btn:hover { background: #e0e0db; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Checkout</h1>
+    <p class="subtitle">Members save 15%. Non-members save 5% on orders over $100.</p>
+
+    <!-- Cart total input -->
+    <div class="card">
+      <p class="card-title">Your Cart</p>
+      <div class="field">
+        <label for="total-input">Cart Total ($)</label>
+        <input type="number" id="total-input" placeholder="e.g. 120" min="0" step="0.01" />
+        <p class="error" id="total-error"></p>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="member-checkbox" />
+        <label for="member-checkbox">
+          I am a member
+          <span class="member-badge">15% off</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Order summary (AI-enhanced section) -->
+    <div class="card">
+      <p class="card-title">Order Summary</p>
+      <div id="summary-content">
+        <p class="empty-summary">Enter a cart total to see your breakdown.</p>
+      </div>
+    </div>
+
+    <!-- Place order -->
+    <button class="checkout-btn" id="checkout-btn" disabled>Place Order</button>
+
+    <!-- Confirmation (shown after order placed) -->
+    <div class="confirmation" id="confirmation">
+      <h2>Order placed!</h2>
+      <p id="confirmation-msg"></p>
+      <button class="reset-btn" id="reset-btn">Start over</button>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------------
+    // getDiscount(total, isMember)
+    // Written by hand, no AI, as required by the 6/24 class exercise.
+    // Uses if/else to determine discount rate based on membership and total.
+    // -------------------------------------------------------------------
+    function getDiscount(total, isMember) {
+      if (isMember) {
+        return total * 0.15;        // members always get 15% off
+      } else if (total > 100) {
+        return total * 0.05;        // non-members get 5% off orders over $100
+      } else {
+        return 0;                   // no discount
+      }
+    }
+
+    // -------------------------------------------------------------------
+    // Everything below was built with AI to turn the function above
+    // into a fuller checkout page, as required by the assignment.
+    // -------------------------------------------------------------------
+
+    // DOM references
+    const totalInput     = document.getElementById("total-input");
+    const memberCheckbox = document.getElementById("member-checkbox");
+    const summaryContent = document.getElementById("summary-content");
+    const checkoutBtn    = document.getElementById("checkout-btn");
+    const totalError     = document.getElementById("total-error");
+    const confirmation   = document.getElementById("confirmation");
+    const confirmMsg     = document.getElementById("confirmation-msg");
+    const resetBtn       = document.getElementById("reset-btn");
+
+    // Update summary whenever inputs change
+    function updateSummary() {
+      const raw = parseFloat(totalInput.value);
+      const isMember = memberCheckbox.checked;
+
+      // Validate
+      if (totalInput.value === "" || isNaN(raw) || raw < 0) {
+        totalError.textContent = raw < 0 ? "Total cannot be negative." : "";
+        summaryContent.innerHTML = '<p class="empty-summary">Enter a cart total to see your breakdown.</p>';
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      totalError.textContent = "";
+
+      const discount = getDiscount(raw, isMember);
+      const finalTotal = raw - discount;
+      const discountPct = isMember ? "15%" : raw > 100 ? "5%" : "0%";
+      const discountLabel = isMember
+        ? "Member discount (15%)"
+        : raw > 100
+          ? "Non-member discount (5%)"
+          : "No discount applied";
+
+      summaryContent.innerHTML = `
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>$${raw.toFixed(2)}</span>
+        </div>
+        <div class="summary-row discount">
+          <span>${discountLabel}</span>
+          <span>- $${discount.toFixed(2)}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>$${finalTotal.toFixed(2)}</span>
+        </div>
+      `;
+
+      checkoutBtn.disabled = false;
+    }
+
+    // Place order
+    function placeOrder() {
+      const raw = parseFloat(totalInput.value);
+      const isMember = memberCheckbox.checked;
+      const discount = getDiscount(raw, isMember);
+      const finalTotal = raw - discount;
+
+      confirmMsg.textContent = `You saved $${discount.toFixed(2)}. Your final total was $${finalTotal.toFixed(2)}.`;
+
+      // Hide form, show confirmation
+      document.querySelectorAll(".card").forEach(function(c) { c.style.display = "none"; });
+      checkoutBtn.style.display = "none";
+      confirmation.style.display = "block";
+    }
+
+    // Reset
+    function reset() {
+      totalInput.value = "";
+      memberCheckbox.checked = false;
+      totalError.textContent = "";
+      summaryContent.innerHTML = '<p class="empty-summary">Enter a cart total to see your breakdown.</p>';
+      checkoutBtn.disabled = true;
+      document.querySelectorAll(".card").forEach(function(c) { c.style.display = "block"; });
+      checkoutBtn.style.display = "block";
+      confirmation.style.display = "none";
+    }
+
+    // Event listeners
+    totalInput.addEventListener("input", updateSummary);
+    memberCheckbox.addEventListener("change", updateSummary);
+    checkoutBtn.addEventListener("click", placeOrder);
+    resetBtn.addEventListener("click", reset);
+  </script>
+</body>
+</html>
