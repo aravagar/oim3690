@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post to the Message Board</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 640px;
+      margin: 60px auto;
+      padding: 0 20px;
+      background: #0f0f0f;
+      color: #f4f4f4;
+    }
+    h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    p.sub { color: #999; margin-top: 0; }
+    .row { display: flex; gap: 10px; margin: 24px 0; }
+    input {
+      flex: 1;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #f4f4f4;
+    }
+    input:focus { outline: 2px solid #c8a24b; border-color: transparent; }
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #c8a24b;
+      color: #0f0f0f;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #status { min-height: 20px; color: #999; font-size: 0.9rem; }
+    pre {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 14px;
+      overflow-x: auto;
+      color: #8fce8f;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Post to the Message Board</h1>
+  <p class="sub">OIM3690 in-class exercise, posting as <strong>aravarav</strong></p>
+
+  <div class="row">
+    <input id="messageInput" type="text" placeholder="Type a message..." />
+    <button id="postBtn">Post</button>
+  </div>
+
+  <p id="status"></p>
+  <pre id="output"></pre>
+
+  <script>
+    const TOKEN = "aravarav"; // first name, twice
+
+    async function postMessage(text) {
+      const response = await fetch("https://oim.zhili.dev/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Token": TOKEN
+        },
+        body: JSON.stringify({ message: text })
+      });
+      return response.json();
+    }
+
+    const input = document.getElementById("messageInput");
+    const button = document.getElementById("postBtn");
+    const status = document.getElementById("status");
+    const output = document.getElementById("output");
+
+    async function handlePost() {
+      const text = input.value.trim();
+      if (!text) {
+        status.textContent = "Type something first.";
+        return;
+      }
+
+      button.disabled = true;
+      status.textContent = "Posting...";
+
+      try {
+        const result = await postMessage(text);
+        status.textContent = "Posted successfully.";
+        output.textContent = JSON.stringify(result, null, 2);
+        input.value = "";
+      } catch (err) {
+        status.textContent = "Something went wrong. Check the console.";
+        console.error(err);
+      } finally {
+        button.disabled = false;
+        input.focus();
+      }
+    }
+
+    button.addEventListener("click", handlePost);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handlePost();
+    });
+  </script>
+</body>
+</html>
