@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data App: Favorite Movies</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 3rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.4rem; }
+    .movie-card { border: 1px solid #ddd; border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.7rem; }
+    .movie-title { font-weight: 600; }
+    .movie-meta { color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Favorite Movies</h1>
+  <div id="movie-list"></div>
+
+  <!-- Only main.js is linked directly. It imports the data it needs
+       from data.js, instead of everything living in one file. -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
