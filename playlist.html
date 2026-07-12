@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlist Practice</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 500px; margin: 3rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.4rem; }
+    ul { padding-left: 1.2rem; }
+    li { margin-bottom: 0.4rem; }
+    .controls { display: flex; gap: 0.5rem; margin: 1rem 0; }
+    input { flex: 1; padding: 0.4rem; }
+    button { padding: 0.4rem 0.8rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>My Playlist</h1>
+
+  <!-- The render-from-data pattern: an array of songs, a loop, one <li> per entry -->
+  <ul id="playlist"></ul>
+
+  <div class="controls">
+    <input type="text" id="song-input" placeholder="Add a song...">
+    <button id="add-end-btn">Add to end (push)</button>
+    <button id="add-start-btn">Add to start (unshift)</button>
+  </div>
+
+  <script>
+    // The array of data. Everything on the page comes from looping over this.
+    let songs = [
+      "Bohemian Rhapsody",
+      "Blinding Lights",
+      "Levitating",
+      "As It Was"
+    ];
+
+    const playlistEl = document.getElementById("playlist");
+    const songInput = document.getElementById("song-input");
+
+    // Render-from-data: clear the list, then loop over the array and
+    // add one <li> per entry. This runs every time the array changes,
+    // so the page always reflects the current state of the array.
+    function renderPlaylist() {
+      playlistEl.innerHTML = "";
+      for (const song of songs) {
+        const li = document.createElement("li");
+        li.textContent = song;
+        playlistEl.appendChild(li);
+      }
+    }
+
+    document.getElementById("add-end-btn").addEventListener("click", () => {
+      const value = songInput.value.trim();
+      if (!value) return;
+      songs.push(value); // adds to the END of the array
+      songInput.value = "";
+      renderPlaylist();
+    });
+
+    document.getElementById("add-start-btn").addEventListener("click", () => {
+      const value = songInput.value.trim();
+      if (!value) return;
+      songs.unshift(value); // adds to the START of the array
+      songInput.value = "";
+      renderPlaylist();
+    });
+
+    renderPlaylist(); // initial render on page load
+  </script>
+</body>
+</html>
