@@ -11,7 +11,7 @@ This is my course repo for OIM3690. It holds class exercises, weekly logs, and l
 | Personal Website               | [repo](https://github.com/aravagar/aravagar.github.io) | [live](https://aravagar.github.io) | ✅     |
 | MP1 — Website for Someone Else | [repo](https://github.com/aravagar/studioforma) | [live](https://aravagar.github.io/studioforma) | ✅ |
 | MP2 — Interactive Web Tool     | [repo](https://github.com/aravagar/studioforma-tracker) | [live](https://aravagar.github.io/studioforma-tracker) | ✅ |
-| MP3 — API-Powered App          |                                                        |                                    | 🔲     |
+| MP3 — API-Powered App          | [repo](https://github.com/aravagar/realply-market-explorer) | [live](https://aravagar.github.io/realply-market-explorer/) | ✅ |
 | Final Project                  |                                                        |                                    | 🔲     |
 
 ## Weekly Logs
