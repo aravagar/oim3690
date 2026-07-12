@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch Fun</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 500px; margin: 3rem auto; padding: 0 1rem; text-align: center; }
+    h1 { font-size: 1.4rem; }
+    img { max-width: 100%; border-radius: 8px; margin-top: 1rem; }
+    #advice-text { font-size: 1.1rem; font-style: italic; margin-top: 1rem; min-height: 3rem; }
+    button { padding: 0.6rem 1.2rem; margin-top: 1rem; cursor: pointer; }
+    #error-msg { color: #B3432E; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Fetch Fun: Random Dog Image</h1>
+
+  <img id="dog-img" alt="A random dog" hidden>
+  <p id="advice-text" hidden></p>
+  <p id="error-msg" hidden></p>
+
+  <button id="fetch-btn">Get a random dog</button>
+  <br>
+  <button id="surprise-btn">🎲 Surprise me (dog or advice)</button>
+
+  <script>
+    const dogImg = document.getElementById("dog-img");
+    const adviceText = document.getElementById("advice-text");
+    const errorMsg = document.getElementById("error-msg");
+
+    // Hand-written first: fetch one dog image, read the one field we need
+    // (data.message is the image URL), and show it. Wrapped in try/catch
+    // since this call depends on a server outside our control.
+    async function getDogImage() {
+      errorMsg.hidden = true;
+      adviceText.hidden = true;
+      try {
+        const response = await fetch("https://dog.ceo/api/breeds/image/random");
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+        const data = await response.json();
+        dogImg.src = data.message; // the one field we actually need
+        dogImg.hidden = false;
+      } catch (error) {
+        console.error(error);
+        errorMsg.textContent = "Couldn't fetch a dog right now. Try again.";
+        errorMsg.hidden = false;
+      }
+    }
+
+    // Second API, same try/catch pattern, reads a different single field
+    // (data.slip.advice) from a completely different response shape.
+    async function getAdvice() {
+      errorMsg.hidden = true;
+      dogImg.hidden = true;
+      try {
+        const response = await fetch("https://api.adviceslip.com/advice");
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+        const data = await response.json();
+        adviceText.textContent = `"${data.slip.advice}"`;
+        adviceText.hidden = false;
+      } catch (error) {
+        console.error(error);
+        errorMsg.textContent = "Couldn't fetch advice right now. Try again.";
+        errorMsg.hidden = false;
+      }
+    }
+
+    // AI-added "Surprise me" button: randomly picks one of the two APIs
+    document.getElementById("surprise-btn").addEventListener("click", () => {
+      if (Math.random() < 0.5) {
+        getDogImage();
+      } else {
+        getAdvice();
+      }
+    });
+
+    document.getElementById("fetch-btn").addEventListener("click", getDogImage);
+
+    getDogImage(); // load one on page open
+  </script>
+</body>
+</html>
