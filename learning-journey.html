@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Journey | Arav Agarwal | OIM3690</title>
+<meta name="description" content="Ten weeks of OIM3690, read back from the weekly logs. What I built, what broke, and how my relationship with AI-generated code changed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E9E7E0;
+    --paper-2:#DFDCD3;
+    --ink:#1C1A17;
+    --ink-soft:#54504A;
+    --rule:#BAB5A9;
+    --brass:#9A7B3F;
+    --timber:#6B4A2F;
+    --pine:#3F5D4A;
+
+    --display:"Space Grotesk",system-ui,sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+
+    --gutter:clamp(18px,4vw,56px);
+    --maxw:1120px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.62;
+    /* faint drafting grid, sits behind everything */
+    background-image:
+      linear-gradient(rgba(28,26,23,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(28,26,23,.045) 1px,transparent 1px);
+    background-size:32px 32px;
+  }
+
+  .sheet{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- title block ---------- */
+  .titleblock{border-bottom:2px solid var(--ink);padding:44px 0 0;}
+  .titleblock h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(38px,7vw,88px);
+    line-height:.94;
+    letter-spacing:-.03em;
+    margin:14px 0 6px;
+  }
+  .titleblock h1 span{display:block;color:var(--brass);}
+  .subtitle{
+    max-width:56ch;
+    font-size:clamp(16px,1.7vw,19px);
+    color:var(--ink-soft);
+    margin:0 0 30px;
+  }
+  .fields{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    border-top:1px solid var(--rule);
+  }
+  .field{padding:12px 14px 12px 0;border-right:1px solid var(--rule);}
+  .field:last-child{border-right:none;}
+  .field dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 3px;}
+  .field dd{margin:0;font-family:var(--mono);font-size:13px;font-weight:500;}
+
+  /* ---------- generic section ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--rule);}
+  .sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:8px;}
+  .sec-no{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.1em;}
+  h2{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(23px,3.2vw,34px);
+    letter-spacing:-.02em;
+    line-height:1.15;
+    margin:0 0 12px;
+  }
+  .lede{max-width:64ch;color:var(--ink-soft);margin:0 0 34px;}
+  .lede strong{color:var(--ink);font-weight:600;}
+
+  /* ---------- signature: the lamination chart ---------- */
+  .lam{display:grid;gap:4px;}
+  .lam-row{
+    display:grid;
+    grid-template-columns:66px 1fr;
+    gap:14px;
+    align-items:center;
+  }
+  .lam-label{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-align:right;line-height:1.3;}
+  .lam-label b{display:block;color:var(--ink);font-weight:500;font-size:12px;}
+  .lam-bar{display:flex;height:30px;border:1px solid var(--ink);background:var(--paper-2);overflow:hidden;}
+  .seg{
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:10px;letter-spacing:.04em;
+    white-space:nowrap;overflow:hidden;
+    transform-origin:left center;
+  }
+  .seg-k{background:var(--paper-2);color:var(--ink-soft);}
+  .seg-c{background:var(--brass);color:#FFF9EC;}
+  .seg-r{background:var(--ink);color:var(--paper);}
+  .seg + .seg{border-left:1px solid var(--ink);}
+
+  .legend{display:flex;flex-wrap:wrap;gap:20px;margin:26px 0 0;font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:13px;height:13px;border:1px solid var(--ink);margin-right:7px;vertical-align:-2px;}
+  .caption{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:20px;max-width:70ch;line-height:1.7;}
+
+  /* ---------- pull quotes ---------- */
+  .bookends{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:44px;border:1px solid var(--ink);}
+  .bookend{padding:26px 24px;background:var(--paper-2);}
+  .bookend:last-child{background:var(--ink);color:var(--paper);}
+  .bookend:last-child .eyebrow{color:var(--brass);}
+  .bookend q{
+    display:block;
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(17px,2.2vw,22px);
+    line-height:1.32;
+    letter-spacing:-.01em;
+    margin:12px 0 10px;
+    quotes:'"' '"';
+  }
+  .bookend cite{font-family:var(--mono);font-size:11px;font-style:normal;color:var(--ink-soft);}
+  .bookend:last-child cite{color:#A9A296;}
+
+  /* ---------- week ledger ---------- */
+  .weeks{display:grid;gap:0;border-top:1px solid var(--rule);}
+  .week{
+    display:grid;
+    grid-template-columns:92px 1fr;
+    gap:22px;
+    padding:24px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .week-no{font-family:var(--mono);font-size:11px;color:var(--ink-soft);line-height:1.5;}
+  .week-no b{display:block;font-family:var(--display);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1;margin-bottom:6px;}
+  .week h3{font-family:var(--display);font-size:19px;font-weight:500;letter-spacing:-.01em;margin:0 0 7px;}
+  .week p{margin:0 0 12px;max-width:70ch;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;}
+  .tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;
+    border:1px solid var(--rule);padding:3px 9px;color:var(--ink-soft);
+  }
+  .tag.ship{border-color:var(--pine);color:var(--pine);}
+  .tag.ship::before{content:"▸ ";}
+  a{color:var(--timber);text-decoration-thickness:1px;text-underline-offset:2px;}
+  a:hover{color:var(--brass);}
+
+  /* ---------- before / after ---------- */
+  .ledger{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);}
+  .col{padding:26px 22px;}
+  .col:first-child{border-right:1px solid var(--ink);background:var(--paper-2);}
+  .col h3{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 4px;color:var(--ink-soft);}
+  .col .date{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.02em;margin:0 0 18px;}
+  .col ul{list-style:none;margin:0;padding:0;}
+  .col li{padding:8px 0 8px 20px;border-top:1px solid var(--rule);position:relative;font-size:15px;}
+  .col li:first-child{border-top:none;}
+  .col li::before{content:"—";position:absolute;left:0;color:var(--rule);}
+  .col.after li::before{content:"✓";color:var(--pine);font-size:12px;}
+
+  /* ---------- lessons ---------- */
+  .lessons{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+  .lesson{background:var(--paper);padding:24px 22px;}
+  .lesson .n{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.1em;}
+  .lesson h3{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.01em;margin:9px 0 8px;line-height:1.25;}
+  .lesson p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  code{font-family:var(--mono);font-size:.86em;background:var(--paper-2);padding:1px 4px;color:var(--ink);border:1px solid rgba(28,26,23,.08);}
+
+  /* ---------- open questions ---------- */
+  .open{list-style:none;margin:0;padding:0;max-width:74ch;}
+  .open li{padding:15px 0 15px 34px;border-bottom:1px solid var(--rule);position:relative;}
+  .open li::before{
+    content:"?";position:absolute;left:0;top:14px;
+    font-family:var(--mono);font-size:14px;color:var(--brass);
+    border:1px solid var(--brass);width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  footer{padding:40px 0 64px;}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.05em;}
+
+  a:focus-visible,.week a:focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+
+  /* ---------- motion ---------- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  .seg{transition:flex-grow .7s cubic-bezier(.2,.7,.3,1);}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .seg{transition:none;}
+  }
+
+  @media (max-width:720px){
+    .bookends,.ledger{grid-template-columns:1fr;}
+    .col:first-child{border-right:none;border-bottom:1px solid var(--ink);}
+    .week{grid-template-columns:1fr;gap:10px;}
+    .week-no{display:flex;align-items:baseline;gap:10px;}
+    .week-no b{margin-bottom:0;}
+    .lam-row{grid-template-columns:52px 1fr;gap:9px;}
+    .lam-label b{font-size:11px;}
+    .seg{font-size:0;}
+    .field{border-right:none;border-bottom:1px solid var(--rule);}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <!-- ============ TITLE BLOCK ============ -->
+  <header class="titleblock">
+    <p class="eyebrow">OIM3690 · AI-Powered Web Development · Babson College</p>
+    <h1>Ten weeks<span>of arguing with the machine</span></h1>
+    <p class="subtitle">
+      I came into this course able to describe what I wanted and not much else. I am leaving it able to
+      tell the difference between code that runs and code that is right. This page is read back from my
+      ten weekly logs, and the thing they actually record is not a syntax curve.
+    </p>
+    <dl class="fields">
+      <div class="field"><dt>Drawn by</dt><dd>Arav Agarwal</dd></div>
+      <div class="field"><dt>Term</dt><dd>Summer 2026</dd></div>
+      <div class="field"><dt>Span</dt><dd>18 May – 24 Jul</dd></div>
+      <div class="field"><dt>Sessions</dt><dd>19</dd></div>
+      <div class="field"><dt>Shipped</dt><dd>5 live sites</dd></div>
+      <div class="field"><dt>Source</dt><dd>logs/wk01–wk10</dd></div>
+    </dl>
+  </header>
+
+  <!-- ============ 01 · THE ARC ============ -->
+  <section class="reveal">
+    <div class="sec-head"><span class="sec-no">01</span><p class="eyebrow">The measurement</p></div>
+    <h2>The thing that changed was not how much code I could write.</h2>
+    <p class="lede">
+      Every log in this course ends its AI section with the same line: <strong>what I kept, what I changed,
+      what I rejected.</strong> I filled that line in ten times without noticing it was keeping score.
+      Read in order, it is the only honest chart of the semester. The bar below is that line, week by week.
+    </p>
+
+    <div class="lam" id="lam">
+      <div class="lam-row"><div class="lam-label"><b>WK 01</b>18–24 May</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 100% kept as generated"><div class="seg seg-k" style="flex:100">kept</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 02</b>25–31 May</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 60% kept as generated, 40% kept the shape but changed the substance"><div class="seg seg-k" style="flex:60">kept</div><div class="seg seg-c" style="flex:40">changed</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 03</b>1–7 Jun</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 55% kept as generated, 45% kept the shape but changed the substance"><div class="seg seg-k" style="flex:55">kept</div><div class="seg seg-c" style="flex:45">changed</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 04</b>8–14 Jun</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 50% kept as generated, 50% kept the shape but changed the substance"><div class="seg seg-k" style="flex:50">kept</div><div class="seg seg-c" style="flex:50">changed</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 05</b>15–21 Jun</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 65% kept as generated, 35% kept the shape but changed the substance"><div class="seg seg-k" style="flex:65">kept</div><div class="seg seg-c" style="flex:35">changed</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 06</b>22–28 Jun</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 45% kept as generated, 45% kept the shape but changed the substance, 10% rejected and rebuilt"><div class="seg seg-k" style="flex:45">kept</div><div class="seg seg-c" style="flex:45">changed</div><div class="seg seg-r" style="flex:10">rej</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 07</b>29 Jun–5 Jul</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 60% kept as generated, 40% kept the shape but changed the substance"><div class="seg seg-k" style="flex:60">kept</div><div class="seg seg-c" style="flex:40">changed</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 08</b>6–12 Jul</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 50% kept as generated, 35% kept the shape but changed the substance, 15% rejected and rebuilt"><div class="seg seg-k" style="flex:50">kept</div><div class="seg seg-c" style="flex:35">changed</div><div class="seg seg-r" style="flex:15">rejected</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 09</b>13–19 Jul</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 40% kept as generated, 25% kept the shape but changed the substance, 35% rejected and rebuilt"><div class="seg seg-k" style="flex:40">kept</div><div class="seg seg-c" style="flex:25">chg</div><div class="seg seg-r" style="flex:35">rejected</div></div></div>
+      <div class="lam-row"><div class="lam-label"><b>WK 10</b>20–26 Jul</div>
+        <div class="lam-bar" role="img" aria-label="Week split: 35% kept as generated, 25% kept the shape but changed the substance, 40% rejected and rebuilt"><div class="seg seg-k" style="flex:35">kept</div><div class="seg seg-c" style="flex:25">chg</div><div class="seg seg-r" style="flex:40">rejected</div></div></div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--paper-2)"></i>Kept as generated</span>
+      <span><i style="background:var(--brass)"></i>Kept the shape, changed the substance</span>
+      <span><i style="background:var(--ink)"></i>Rejected and rebuilt</span>
+    </div>
+    <p class="caption">
+      Weighted by hand from the "what I kept / changed / rejected" line in each log, not from a script.
+      The direction is the point, not the decimals. Week 1 has no dark band at all. By Week 10 it is the
+      widest one on the sheet.
+    </p>
+
+    <div class="bookends">
+      <div class="bookend">
+        <p class="eyebrow">Week 1 · first AI interaction</p>
+        <q>Kept the full design and structure as generated.</q>
+        <cite>logs/wk01.md</cite>
+      </div>
+      <div class="bookend">
+        <p class="eyebrow">Week 10 · last AI interaction</p>
+        <q>Rejected the automatic send. The default should be the safe one.</q>
+        <cite>logs/wk10.md</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · THE BUILD ============ -->
+  <section class="reveal">
+    <div class="sec-head"><span class="sec-no">02</span><p class="eyebrow">The build log</p></div>
+    <h2>Ten weeks, five live sites, one business.</h2>
+    <p class="lede">
+      Every project in this course points at a real company. Studioforma makes modular furniture, Realply
+      trades raw materials, and both are run by people who would actually have to use whatever I shipped.
+      That constraint did more for the work than any assignment brief could have.
+    </p>
+
+    <div class="weeks">
+
+      <article class="week">
+        <div class="week-no"><b>01</b>18–24 May</div>
+        <div>
+          <h3>A repo, a live URL, and no idea what was in the file</h3>
+          <p>Set up GitHub, pushed two repos, and had a personal site deployed within the week. I could not have explained half of what was in the HTML, and I said so in the log. Five of my questions that week were about tags in my own file.</p>
+          <div class="tags"><span class="tag ship">aravagar.github.io</span><span class="tag">GitHub Pages</span><span class="tag">Markdown</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>02</b>25–31 May</div>
+        <div>
+          <h3>Writing it by hand first, then letting AI try</h3>
+          <p>Built <code>hello.html</code> myself before asking AI for its version, then compared. Learned the READ-FIND-ASK-VERIFY habit: tell it what I already understand and ask only about the rest. That single change made the explanations useful instead of overwhelming.</p>
+          <div class="tags"><span class="tag">Semantic HTML</span><span class="tag">Reading AI code</span><span class="tag">about-me.html</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>03</b>1–7 Jun</div>
+        <div>
+          <h3>MP1 starts, and the client answer reframes the whole site</h3>
+          <p>Interviewed Abhiroop about Studioforma even though he is family and I know the business. His answer to "what is the single most important action" was not "look good," it was getting people to open the catalogues and reach out. I rebuilt the site around that.</p>
+          <div class="tags"><span class="tag ship">studioforma</span><span class="tag">Flexbox + Grid</span><span class="tag">PROPOSAL → PRD</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>04</b>8–14 Jun</div>
+        <div>
+          <h3>The bug was not in my code</h3>
+          <p>The Studioforma logo rendered as a solid black box on a white header. I lost real time looking through my HTML and CSS. The file itself had a black background. Hardest change of MP1 and it turned out to be an asset problem, not a code problem.</p>
+          <div class="tags"><span class="tag">Responsive</span><span class="tag">Forms</span><span class="tag">Client feedback round</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>05</b>15–21 Jun</div>
+        <div>
+          <h3>Learning to spot the generic AI look</h3>
+          <p>Rounded cards, warm paper backgrounds, generic fonts, pages that do not match each other. The fix is naming the font, the colours and the corner style instead of asking for something nice. Also wrote my first honest "things in this file I cannot explain" list.</p>
+          <div class="tags"><span class="tag">JS intro</span><span class="tag">classList.toggle</span><span class="tag">MP2 scoped</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>06</b>22–28 Jun</div>
+        <div>
+          <h3>MP2: a real tool for the production floor</h3>
+          <p>Built the Studioforma production tracker over three iterations for Mr. Laxman, who ran the floor off a whiteboard. Added Carpentry, Painting and Finishing as sub-stages only after thinking about how the floor actually works. Replaced <code>window.confirm()</code> with a two-step inline confirm because the brief banned dialogs.</p>
+          <div class="tags"><span class="tag ship">studioforma-tracker</span><span class="tag">localStorage</span><span class="tag">Render from state</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>07</b>29 Jun–5 Jul</div>
+        <div>
+          <h3>Data going out, not just coming in</h3>
+          <p>POST requests to the class API with my own token header. The render-from-data pattern clicked properly this week: an array, a loop, one element per entry is the same shape under a to-do list, a feed and a playlist.</p>
+          <div class="tags"><span class="tag">fetch / POST</span><span class="tag">Arrays + loops</span><span class="tag">MP3 scoped</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>08</b>6–12 Jul</div>
+        <div>
+          <h3>Two APIs broke under a working build</h3>
+          <p>REST Countries v3.1 was retired mid-project and its replacement needs a key, which a static site cannot hide. Frankfurter had silently moved domain and parameter. I also caught AI displaying currency backwards: mathematically correct, useless to anyone at Realply comparing a price.</p>
+          <div class="tags"><span class="tag ship">realply-market-explorer</span><span class="tag">Lighthouse 91/100/100/100</span><span class="tag">Leaflet</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>09</b>13–19 Jul</div>
+        <div>
+          <h3>Shipping MP3 and rejecting my own proposal</h3>
+          <p>Finished and deployed the market explorer. Then AI drafted my final project proposal as a tidy six-stage sales pipeline and I threw the structure out. A sales-only pipeline does not describe Studioforma's actual problem, which is that a project falls off a cliff between the sales sheet and the factory.</p>
+          <div class="tags"><span class="tag">Browser APIs</span><span class="tag">Scope as exclusion</span><span class="tag">Peer review</span></div>
+        </div>
+      </article>
+
+      <article class="week">
+        <div class="week-no"><b>10</b>20–26 Jul</div>
+        <div>
+          <h3>The final project, and deciding where the human goes</h3>
+          <p>Built the Studioforma CRM: one continuous pipeline from first inquiry to dispatch, sixteen editable stages taken from the team's real vocabulary, every stage move logged against a person. It can message a client on WhatsApp and it deliberately will not do it by itself.</p>
+          <div class="tags"><span class="tag ship">crm</span><span class="tag">PRD before code</span><span class="tag">Data-layer isolation</span><span class="tag">Schema migration</span></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ 03 · BEFORE / AFTER ============ -->
+  <section class="reveal">
+    <div class="sec-head"><span class="sec-no">03</span><p class="eyebrow">Before and after</p></div>
+    <h2>Same person, ten weeks apart.</h2>
+    <p class="lede">Both columns are taken straight from what I actually wrote down at the time.</p>
+
+    <div class="ledger">
+      <div class="col">
+        <h3>Where I started</h3>
+        <p class="date">18 May 2026</p>
+        <ul>
+          <li>"How do I edit specific parts of the HTML without breaking the rest of the file?"</li>
+          <li>Did not know what <code>&lt;meta charset&gt;</code> did, in my own page</li>
+          <li>Could not say when to use a <code>div</code> instead of a semantic tag</li>
+          <li>Accepted a generated site whole, with no changes</li>
+          <li>Had never deployed anything</li>
+          <li>Thought the GitHub file view was the live site</li>
+        </ul>
+      </div>
+      <div class="col after">
+        <h3>Where I finished</h3>
+        <p class="date">24 July 2026</p>
+        <ul>
+          <li>Wrote a schema migration so existing users do not lose data on a model change</li>
+          <li>Isolated the data layer so the storage backend can be swapped without touching the views</li>
+          <li>Diagnosed two silent third-party API deprecations from a blank screen</li>
+          <li>Overruled an agent on a product decision and can explain why</li>
+          <li>Five live URLs, three of them tools someone else can use</li>
+          <li>Read a Lighthouse report and fixed what it actually meant</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · LESSONS ============ -->
+  <section class="reveal">
+    <div class="sec-head"><span class="sec-no">04</span><p class="eyebrow">What the failures taught</p></div>
+    <h2>Four things I only learned by getting them wrong.</h2>
+
+    <div class="lessons">
+      <div class="lesson">
+        <span class="n">01</span>
+        <h3>An API you depend on can die while you are building on it</h3>
+        <p>REST Countries went dead mid-build and Frankfurter moved without telling anyone. Now I check that a service is current, keyless and CORS-enabled before I write a line against it.</p>
+      </div>
+      <div class="lesson">
+        <span class="n">02</span>
+        <h3>The browser will happily show you a bug you already fixed</h3>
+        <p>Stale cached JavaScript cost me an afternoon of debugging working code. <code>app.js?v=7</code> and a hard refresh, then believe what the Network tab says over what the page says.</p>
+      </div>
+      <div class="lesson">
+        <span class="n">03</span>
+        <h3>Correct and useful are different things</h3>
+        <p>"1 INR = 0.012 USD" is not wrong. It is just backwards for anyone at Realply checking what a foreign price costs. I only saw it by using the panel the way an employee would.</p>
+      </div>
+      <div class="lesson">
+        <span class="n">04</span>
+        <h3>Passing tests written by the same tool prove very little</h3>
+        <p>An agent tests what it decided to test. So I ask it directly: list every decision you made that I did not specify. That question has found more real problems than reading the diff.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · OPEN ============ -->
+  <section class="reveal">
+    <div class="sec-head"><span class="sec-no">05</span><p class="eyebrow">Still open</p></div>
+    <h2>What I am carrying out of the course.</h2>
+    <p class="lede">
+      Every log ended with a questions section. These are the ones the semester did not close, and they
+      are the reason this does not stop at the last checkpoint.
+    </p>
+    <ul class="open">
+      <li>Is <code>store.js</code> really a drop-in swap to Supabase because the data layer is isolated, or are auth and sync the actual job hiding behind that claim?</li>
+      <li>Once several people write to the same board, what happens when two of them advance the same project at the same time?</li>
+      <li>How do you tell in advance whether an API key is safe to expose client-side, when most providers never say either way?</li>
+      <li>To make the CRM something the team opens daily instead of a prototype, is the blocker the shared backend or the experience on a phone?</li>
+    </ul>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="foot">
+      <span>Arav Agarwal · OIM3690 · Summer 2026</span>
+      <span>Built from <a href="logs/">logs/wk01–wk10</a></span>
+      <span><a href="https://github.com/aravagar/oim3690">github.com/aravagar</a></span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Reveal sections on scroll, and grow the lamination bars once the chart is in view.
+  (function () {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var targets = document.querySelectorAll(".reveal");
+
+    if (reduce || !("IntersectionObserver" in window)) {
+      targets.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+
+    // Collapse the bars first so they can animate outward when scrolled to.
+    var segs = document.querySelectorAll("#lam .seg");
+    var widths = [];
+    segs.forEach(function (s, i) {
+      widths[i] = s.style.flex;
+      s.style.flex = "0";
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        if (entry.target.querySelector("#lam")) {
+          segs.forEach(function (s, i) {
+            setTimeout(function () { s.style.flex = widths[i]; }, 90 + i * 40);
+          });
+        }
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    targets.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
